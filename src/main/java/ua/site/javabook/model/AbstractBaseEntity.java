@@ -2,11 +2,19 @@ package ua.site.javabook.model;
 
 import org.springframework.data.domain.Persistable;
 
+import javax.persistence.*;
 import java.util.Objects;
-
+@MappedSuperclass
+@Access(AccessType.FIELD)
 public abstract class AbstractBaseEntity implements Persistable<Integer> {
-    public static final int TART_SEQ=500;
+
+    public static final int START_SEQ=500;
+
+    @Id
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     protected Integer id;
+
     public AbstractBaseEntity() {
     }
     public AbstractBaseEntity(Integer id) {
