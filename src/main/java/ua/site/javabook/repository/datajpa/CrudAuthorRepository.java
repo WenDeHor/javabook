@@ -20,5 +20,5 @@ public interface CrudAuthorRepository extends JpaRepository<EntityAuthor, Intege
     //    https://stackoverflow.com/a/46013654/548473
     @EntityGraph(attributePaths = {"books"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT ea FROM EntityAuthor ea WHERE ea.id=?1")
-   EntityAuthor getWithEntityBook(int id);
+   EntityAuthor getAllByBookList(int id);
 }

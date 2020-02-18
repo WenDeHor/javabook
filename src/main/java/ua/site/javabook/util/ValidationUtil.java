@@ -1,8 +1,8 @@
 package ua.site.javabook.util;
 
 
-import ru.javawebinar.topjava.model.AbstractBaseEntity;
-import ru.javawebinar.topjava.util.exception.NotFoundException;
+import ua.site.javabook.model.AbstractBaseEntity;
+import ua.site.javabook.util.exception.NotFoundException;
 
 public class ValidationUtil {
 

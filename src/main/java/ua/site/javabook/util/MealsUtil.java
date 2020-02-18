@@ -1,8 +1,9 @@
 package ua.site.javabook.util;
 
 import org.springframework.lang.Nullable;
-import ru.javawebinar.topjava.model.Meal;
+import ua.site.javabook.model.EntityBook;
 import ru.javawebinar.topjava.to.MealTo;
+import ua.site.javabook.to.BookTo;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -13,25 +14,21 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class MealsUtil {
-    public static final int DEFAULT_CALORIES_PER_DAY = 2000;
+    public static final int DEFAULT_COST_NORM = 100;
 
     private MealsUtil() {
     }
 
-    public static List<MealTo> getTos(Collection<Meal> meals, int caloriesPerDay) {
-        return getFiltered(meals, caloriesPerDay, meal -> true);
+    public static List<EntityBook> getTos(Collection<EntityBook> eb, int costNorm) {
+        return getFiltered(eb, costNorm, meal -> true);
     }
 
-    public static List<MealTo> getFilteredTos(Collection<Meal> meals, int caloriesPerDay, @Nullable LocalTime startTime, @Nullable LocalTime endTime) {
+    public static List<BookTo> getFilteredTos(Collection<Meal> meals, int caloriesPerDay, @Nullable LocalTime startTime, @Nullable LocalTime endTime) {
         return getFiltered(meals, caloriesPerDay, meal -> Util.isBetweenInclusive(meal.getTime(), startTime, endTime));
     }
 
-    private static List<MealTo> getFiltered(Collection<Meal> meals, int caloriesPerDay, Predicate<Meal> filter) {
-        Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
-                .collect(
-                        Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
-//                      Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
-                );
+    private static List<BookTo> getFiltered(Collection<EntityBook> eb, int cost, Predicate<EntityBook> filter) {
+
         return meals.stream()
                 .filter(filter)
                 .map(meal -> createTo(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay))
